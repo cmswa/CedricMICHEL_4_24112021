@@ -79,6 +79,12 @@ function isInvalid(element, message) {
 	target.setAttribute("data-error", message);
 }
 
+//valid alert
+function isValid() {
+	modalbg.style.display = "none";
+	modalConfirm.style.display = "block";
+}
+
 //delete previous alerts
 function removeAlerts() {
 	let invalidFields = document.querySelectorAll(
@@ -112,7 +118,9 @@ const emailInput = document.getElementById("email");
 function emailValidation() {
   //if ((emailInput.validity.valid) == true) return true;
   //else return false;
-	return emailInput.validity.valid;
+  //emailInput.validity.valid;
+	if (emailInput.validity.valid) return true;
+	else return false;
 }
 
 //check if birthdate is valid and older than today
@@ -155,6 +163,33 @@ const checkboxInput = document.getElementById("checkbox1");
 function checkboxValidation() {
 	return checkboxInput.checked;
 }
+
+// global validation
+function validate(event) {
+	event.preventDefault(); //si l'évènement n'est pas explicitement géré, l'action par défaut ne devrait pas être exécutée comme elle l'est normalement.
+	let isValidInput = true;
+  //delete previous alerts
+	removeAlerts();
+  if (!firstValidation()) { //si firstValidation est faux
+		isValidInput = false;
+		isInvalid(firstNameInput, errorMessages.firstName);
+	}
+  if (!lastValidation()) {
+		isValidInput = false;
+    isInvalid(lastNameInput, errorMessages.lastName);
+  }
+  if (!emailValidation()) {
+    isValidInput = false;
+    isInvalid(emailInput, errorMessages.email);
+  }
+  
+
+  if (isValidInput) {
+		isValid();
+	}
+}
+
+
 
 /*function validation(event) {
 
