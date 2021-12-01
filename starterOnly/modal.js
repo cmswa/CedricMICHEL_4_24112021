@@ -43,8 +43,7 @@ const modalConfirmClose = document.querySelector('.close-modal-confirm');
 //modalConfirmBtn.forEach((btn) => btn.addEventListener('click', validation));
 
 //soumettre le formulaire
-modalConfirmBtn.addEventListener('click', validation);
-
+//modalConfirmBtn.addEventListener('click', validation);
 
 
 // event close modal confirm
@@ -54,26 +53,6 @@ modalConfirmClose.addEventListener('click', closeModalConfirm);
 function closeModalConfirm() {
   modalConfirm.style.display = "none";
 }
-
-
-/*function validation() {
-  modalbg.style.display = "none";
-  modalConfirm.style.display = 'block';
-  modalConfirmBtn.addEventListener('click', () => {
-    modalConfirm.style.display = 'none';
-  });
-  modalConfirmClose.addEventListener('click', () => {
-    modalConfirm.style.display = 'none';
-  });
-}*/
-
-// check first name
-/*const firstNameInput = document.getElementById('first');
-function firstValidation() {
-  let inputValue = firstNameInput.value;
-  if (inputValue !== null && inputValue >= 2) return true;
-  else return false;
-}*/
 
 //validation
 
@@ -89,14 +68,101 @@ const errorMessages = {
 	checkbox: "Veuillez accepter les conditions d'utilisations.",
 };
 
-function validation(event) {
+/* Functions */
+
+//invalid alert
+function isInvalid(element, message) {
+	let target;
+	if (NodeList.prototype.isPrototypeOf(element)) target = element[0].parentNode;
+	else target = element.parentNode;
+	target.setAttribute("data-error-visible", true);
+	target.setAttribute("data-error", message);
+}
+
+//delete previous alerts
+function removeAlerts() {
+	let invalidFields = document.querySelectorAll(
+		'.formData[data-error-visible="true"]'
+	);
+	for (let field of invalidFields) {
+		field.setAttribute("data-error-visible", false);
+		field.setAttribute("data-error", "");
+	}
+}
+
+// check first name
+const firstNameInput = document.getElementById("first");
+function firstValidation() {
+	let inputValue = firstNameInput.value;
+	if (inputValue !== null && inputValue.length >= 2) return true;
+	else return false;
+}
+
+//check last name
+const lastNameInput = document.getElementById('last');
+function lastValidation() {
+  let inputValue = lastNameInput.value;
+  if (inputValue !== null && inputValue.length >= 2) return true;
+  else return false;
+}
+
+//check validity mail using "constraint validation in html"
+//simplifier le code en évitant une regex js grâce aux attributs de validation html
+const emailInput = document.getElementById("email");
+function emailValidation() {
+  //if ((emailInput.validity.valid) == true) return true;
+  //else return false;
+	return emailInput.validity.valid;
+}
+
+//check if birthdate is valid and older than today
+const birthdateInput = document.getElementById("birthdate");
+function birthdateValidation() {
+	let birthdate = new Date(birthdateInput.value);
+	let today = new Date();
+	if (birthdate.toString() !== "Invalid Date") {
+		if (
+			birthdate.getDate() >= today.getDate() &&
+			birthdate.getMonth() == today.getMonth() &&
+			birthdate.getFullYear() == today.getFullYear()
+		) {
+			return false;
+		} else {
+			return true;
+		}
+	} 
+}
+
+// check if quantity is a valid number using "constraint validation in html"
+const quantityInput = document.getElementById('quantity');
+function quantityValidation() {
+	//if ((quantityInput.validity.valid) == true) return true;
+  //else return false;
+	return quantityInput.validity.valid;
+}
+
+// check if user chose a location
+const locationInput = document.querySelectorAll(".checkbox-input[type=radio]");
+function locationValidation() {
+	for (let radio of locationInput) {
+		if (radio.checked === true) return true;
+	}
+	return false;
+}
+
+//check if cgu are checked
+const checkboxInput = document.getElementById("checkbox1");
+function checkboxValidation() {
+	return checkboxInput.checked;
+}
+
+/*function validation(event) {
 
   //si le champs du prénom est vide
   const firstNameInput = document.getElementById("first");
   if (firstNameInput.validity.valueMissing) {
     event.preventDefault();
-    firstNameInput.textContent = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
-    firstNameInput.style.fontSize = "12px";
+    firstNameInput.innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
     firstNameInput.style.border = "2px solid red";
     firstNameInput.style.color = "red";
   }
@@ -127,11 +193,12 @@ if (lastNameInput.validity.tooShort) {
   lastNameInput.style.border = "2px solid red";
   lastNameInput.style.color = "red";
 };
+
 //si le champ email n'est pas valide
 const emailInput = document.getElementById("email");
 if ((emailInput.validity.valid) == false) {
   event.preventDefault();
-  emailInput.textContent = "Veuillez entrer une adresse email valide";
+  emailInput.after.textContent = "Veuillez entrer une adresse email valide";
   emailInput.style.border = "2px solid red";
   emailInput.style.color = "red";
 };
@@ -144,4 +211,4 @@ if (dateInput.validity.valueMissing) {
   dateInput.style.color = "red";
 };
 
-}
+}*/
