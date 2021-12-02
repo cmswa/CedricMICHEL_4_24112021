@@ -72,9 +72,9 @@ const errorMessages = {
 
 //invalid alert
 function isInvalid(element, message) {
-	let target;
-	if (NodeList.prototype.isPrototypeOf(element)) target = element[0].parentNode;
-	else target = element.parentNode;
+	let target = element.parentNode;
+	//if (NodeList.prototype.isPrototypeOf(element)) target = element[0].parentNode;
+	//else target = element.parentNode;
 	target.setAttribute("data-error-visible", true);
 	target.setAttribute("data-error", message);
 }
@@ -114,13 +114,12 @@ function lastValidation() {
 
 //check validity mail using "constraint validation in html"
 //simplifier le code en évitant une regex js grâce aux attributs de validation html
+
+//check validity mail using regex
 const emailInput = document.getElementById("email");
 function emailValidation() {
-  //if ((emailInput.validity.valid) == true) return true;
-  //else return false;
-  //emailInput.validity.valid;
-	if (emailInput.validity.valid) return true;
-	else return false;
+	let regex = /^\S+@\S+\.\S+$/;
+	return regex.test(emailInput.value); //Teste s'il y a une correspondance dans la chaîne de caractères fournie en paramètre.
 }
 
 //check if birthdate is valid and older than today
@@ -141,12 +140,11 @@ function birthdateValidation() {
 	} 
 }
 
-// check if quantity is a valid number using "constraint validation in html"
+// check if quantity is a valid number
 const quantityInput = document.getElementById('quantity');
 function quantityValidation() {
-	//if ((quantityInput.validity.valid) == true) return true;
-  //else return false;
-	return quantityInput.validity.valid;
+	let regex = /^[0-9]+$/;
+	return regex.test(quantityInput.value);
 }
 
 // check if user chose a location
@@ -182,6 +180,14 @@ function validate(event) {
     isValidInput = false;
     isInvalid(emailInput, errorMessages.email);
   }
+  if (!birthdateValidation()) {
+		isValidInput = false;
+		isInvalid(birthdateInput, errorMessages.birthdate);
+	}
+  if (!quantityValidation()) {
+		isValidInput = false;
+		isInvalid(quantityInput, errorMessages.quantity);
+	}
   
 
   if (isValidInput) {
