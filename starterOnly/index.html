@@ -62,7 +62,10 @@
               action="index.html"
               method="get"
               onsubmit="return validate(event);"
-            >
+              novalidate
+              >
+              <!-- novalidate is a boolean attribute. it specifies that the form-data (input) should not be validated when submitted. -->
+            
               <div
                 class="formData">
                 <label for="first">Prénom</label><br>
@@ -183,7 +186,7 @@
               </div>
 
               <div
-                class="formData">
+                class="formData formData-termsOfUse">
                 <input
                   class="checkbox-input"
                   type="checkbox"

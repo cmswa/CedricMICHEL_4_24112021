@@ -171,13 +171,18 @@ main {
 
 .modal-confirm {
   display: none;
-  position: absolute;
+  position: fixed;
   z-index: 2;
   left: 0;
-  top: 50%;
+  top: 0;
   height: 100%;
   width: 100%;
   overflow: auto;
+  background-color: rgba(26, 39, 156, 0.4);
+}
+
+.modal-confirm .content {
+  top: 40%;
 }
 
 .content {
@@ -230,6 +235,10 @@ input {
   line-height: 0.3;
   opacity: 0;
   transition: 0.3s;
+}
+.formData-termsOfUse[data-error]::after{
+  position: relative;
+  bottom: 5.7em;
 }
 .formData[data-error-visible="true"]::after {
   opacity: 1;
