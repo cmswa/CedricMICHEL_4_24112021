@@ -47,6 +47,7 @@ function closeModalConfirm() {
   modalConfirm.style.display = 'none';
 }
 
+
 // error messages
 const errorMessages = {
   lastName: 'Veuillez entrer un nom comportant 2 caractères ou plus.',
@@ -139,7 +140,7 @@ function quantityValidation() {
 const locationInput = document.querySelectorAll('.checkbox-input[type=radio]');
 function locationValidation() {
   for (let radio of locationInput) {
-    if (radio.checked === true) return true;
+  if (radio.checked === true) return true;
   }
   return false;
 }
