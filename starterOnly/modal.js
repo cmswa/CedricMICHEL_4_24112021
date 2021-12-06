@@ -76,13 +76,12 @@ const errorMessages = {
 //isPrototypeOf () permet de vérifier si un objet existe ou non dans la chaîne de prototypes d'un autre objet
 //element.parentNode est l'élément parent du nœud courant. Le parent d'un élément est un nœud Element
 function isInvalid(element, message) { // 2 paramètres element et message: les input et errorMessages (ce sont les arguments de la fonction appelée)
-	let target;
-	if (NodeList.prototype.isPrototypeOf(element)) target = element[0].parentNode;
-	else target = element.parentNode;
-	target.setAttribute("data-error-visible", true);
-	target.setAttribute("data-error", message);
+    let target;
+    if (NodeList.prototype.isPrototypeOf(element)) target = element[0].parentNode;
+    else target = element.parentNode;
+    target.setAttribute("data-error-visible", true);
+    target.setAttribute("data-error", message);
 }
-
 
 // valid alert
 function isValid() {
@@ -129,15 +128,11 @@ function birthdateValidation() {
   //https://stackoverflow.com/questions/7445328/check-if-a-string-is-a-date-value/25047903#25047903
   if (birthdate.toString() !== 'Invalid Date') {
     // check if date time string is invalid date js
-    if (
+    return !(
       birthdate.getDate() >= today.getDate() &&
       birthdate.getMonth() == today.getMonth() &&
       birthdate.getFullYear() == today.getFullYear()
-    ) {
-      return false;
-    } else {
-      return true;
-    }
+    );
   }
 }
 
@@ -150,9 +145,8 @@ function quantityValidation() {
 // check if user chose a location
 function locationValidation() {
   for (let radio of locationInput) {
-  if (radio.checked === true) return true;
+    return radio.checked;
   }
-  return false;
 }
 
 // check if cgu are checked
