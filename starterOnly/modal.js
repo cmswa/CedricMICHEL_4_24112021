@@ -38,15 +38,25 @@ const form = document.getElementById('form');
 const modalConfirm = document.querySelector('.modal-confirm');
 const modalConfirmBtn = document.querySelector('.btn-submit');
 const modalConfirmClose = document.querySelector('.close-modal-confirm');
+const modalConfirmCloseBtn = document.querySelector('.modal-confirm-closeBtn');
 
 // event close modal confirm
 modalConfirmClose.addEventListener('click', closeModalConfirm);
+modalConfirmCloseBtn.addEventListener('click', closeModalConfirm);
 
 // fermer la modal de confirmation
 function closeModalConfirm() {
   modalConfirm.style.display = 'none';
 }
 
+// DOM Input Elements
+const firstNameInput = document.getElementById('first');
+const lastNameInput = document.getElementById('last');
+const emailInput = document.getElementById('email');
+const birthdateInput = document.getElementById('birthdate');
+const quantityInput = document.getElementById('quantity');
+const locationInput = document.querySelectorAll('.checkbox-input[type=radio]');
+const checkboxInput = document.getElementById('checkbox1');
 
 // error messages
 const errorMessages = {
@@ -61,20 +71,26 @@ const errorMessages = {
 
 /* Functions */
 
-//invalid alert
-function isInvalid(element, message) {
-  let target = element.parentNode;
-  target.setAttribute('data-error-visible', true);
-  target.setAttribute('data-error', message);
+// invalid alert
+//NodeList.prototype.isPrototypeOf(nodes) retour true si les nœuds sont de type NodeList
+//isPrototypeOf () permet de vérifier si un objet existe ou non dans la chaîne de prototypes d'un autre objet
+//element.parentNode est l'élément parent du nœud courant. Le parent d'un élément est un nœud Element
+function isInvalid(element, message) { // 2 paramètres element et message: les input et errorMessages (ce sont les arguments de la fonction appelée)
+	let target;
+	if (NodeList.prototype.isPrototypeOf(element)) target = element[0].parentNode;
+	else target = element.parentNode;
+	target.setAttribute("data-error-visible", true);
+	target.setAttribute("data-error", message);
 }
 
-//valid alert
+
+// valid alert
 function isValid() {
   modalbg.style.display = 'none';
   modalConfirm.style.display = 'block';
 }
 
-//delete previous alerts
+// delete previous alerts
 //pour afficher les messages d'erreurs je me sers du css existant .formData[data-error]
 function removeAlerts() {
   let invalidFields = document.querySelectorAll(
@@ -87,30 +103,26 @@ function removeAlerts() {
 }
 
 // check first name
-const firstNameInput = document.getElementById('first');
 function firstValidation() {
   let inputValue = firstNameInput.value;
   if (inputValue !== null && inputValue.length >= 2) return true;
   else return false;
 }
 
-//check last name
-const lastNameInput = document.getElementById('last');
+// check last name
 function lastValidation() {
   let inputValue = lastNameInput.value;
   if (inputValue !== null && inputValue.length >= 2) return true;
   else return false;
 }
 
-//check validity mail using regex
-const emailInput = document.getElementById('email');
+// check validity mail using regex
 function emailValidation() {
   let regex = /^\S+@\S+\.\S+$/; //créer une expression régulière: let regExp = /motif/marqueur;
   return regex.test(emailInput.value); //Teste la correspondance de l'expression régulière.
 }
 
-//check if birthdate is valid and older than today
-const birthdateInput = document.getElementById('birthdate');
+// check if birthdate is valid and older than today
 function birthdateValidation() {
   let birthdate = new Date(birthdateInput.value);
   let today = new Date();
@@ -130,14 +142,12 @@ function birthdateValidation() {
 }
 
 // check if quantity is a valid number
-const quantityInput = document.getElementById('quantity');
 function quantityValidation() {
   let regex = /^[0-9]+$/;
   return regex.test(quantityInput.value);
 }
 
 // check if user chose a location
-const locationInput = document.querySelectorAll('.checkbox-input[type=radio]');
 function locationValidation() {
   for (let radio of locationInput) {
   if (radio.checked === true) return true;
@@ -145,8 +155,7 @@ function locationValidation() {
   return false;
 }
 
-//check if cgu are checked
-const checkboxInput = document.getElementById('checkbox1');
+// check if cgu are checked
 function checkboxValidation() {
   return checkboxInput.checked; //représente ici la case à cocher qui est coché
 }
