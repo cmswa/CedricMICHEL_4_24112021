@@ -55,7 +55,7 @@ const lastNameInput = document.getElementById('last');
 const emailInput = document.getElementById('email');
 const birthdateInput = document.getElementById('birthdate');
 const quantityInput = document.getElementById('quantity');
-const locationInput = document.querySelectorAll('.checkbox-input[type=radio]');
+const locationInput = document.querySelectorAll('.formData-town input');
 const checkboxInput = document.getElementById('checkbox1');
 
 // error messages
@@ -145,7 +145,9 @@ function quantityValidation() {
 // check if user chose a location
 function locationValidation() {
   for (let radio of locationInput) {
-    return radio.checked;
+    if (radio.checked) {
+      return radio.checked;
+    }
   }
 }
 
