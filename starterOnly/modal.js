@@ -79,6 +79,7 @@ function isInvalid(element, message) { // 2 paramètres element et message: les 
     let target;
     if (NodeList.prototype.isPrototypeOf(element)) target = element[0].parentNode;
     else target = element.parentNode;
+//pour afficher les messages d'erreurs je me sers du css existant .formData[data-error]   
     target.setAttribute("data-error-visible", true);
     target.setAttribute("data-error", message);
 }
@@ -90,7 +91,7 @@ function isValid() {
 }
 
 // delete previous alerts
-//pour afficher les messages d'erreurs je me sers du css existant .formData[data-error]
+//pour supprimer les messages d'erreurs je me sers du css existant .formData[data-error]
 function removeAlerts() {
   let invalidFields = document.querySelectorAll(
     '.formData[data-error-visible="true"]'
